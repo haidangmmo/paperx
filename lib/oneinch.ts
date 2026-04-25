@@ -1,34 +1,34 @@
-import { ONEINCH_API, PLATFORM_FEE_WALLET_BSC, PLATFORM_FEE_BPS } from "./constants"
+const ZEROX_API = "https://api.0x.org/swap/permit2"
+const ZEROX_API_KEY = process.env.NEXT_PUBLIC_ZEROX_API_KEY || ""
 
-export async function getOneInchSwapTx(
-  srcToken: string,
-  dstToken: string,
-  amount: string,
-  fromAddress: string,
-  slippage: number = 0.5
+export async function getZeroXSwapTx(
+  sellToken: string,
+  buyToken: string,
+  sellAmount: string,
+  taker: string,
+  chainId: number = 56
 ): Promise<any | null> {
   try {
     const params = new URLSearchParams({
-      src: srcToken,
-      dst: dstToken,
-      amount,
-      from: fromAddress,
-      slippage: slippage.toString(),
-      fee: (PLATFORM_FEE_BPS / 100).toString(),
-      referrer: PLATFORM_FEE_WALLET_BSC,
+      chainId: chainId.toString(),
+      sellToken,
+      buyToken,
+      sellAmount,
+      taker,
     })
-    const res = await fetch(`${ONEINCH_API}/swap?${params}`, {
+    const res = await fetch(`${ZEROX_API}/quote?${params}`, {
       headers: {
-        Authorization: `Bearer ${process.env.NEXT_PUBLIC_ONEINCH_API_KEY || ""}`,
+        "0x-api-key": ZEROX_API_KEY,
+        "0x-version": "v2",
       },
     })
-    if (!res.ok) throw new Error("1inch swap failed")
+    if (!res.ok) throw new Error("0x quote failed")
     return await res.json()
   } catch (e) {
-    console.error("1inch swap error:", e)
+    console.error("0x swap error:", e)
     return null
   }
 }
 
-export const BNB_ADDRESS = "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE"
+export const BNB_ADDRESS = "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
 export const bnbToWei = (bnb: number) => BigInt(Math.floor(bnb * 1e18)).toString()
