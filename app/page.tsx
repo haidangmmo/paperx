@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, useCallback } from "react"
+import { useState, useEffect } from "react"
 import { Connection, VersionedTransaction } from "@solana/web3.js"
 import { CHAINS, QUICK_BUY_AMOUNTS } from "@/lib/constants"
 import { getJupiterQuote, getJupiterSwapTx, solToLamports } from "@/lib/jupiter"
