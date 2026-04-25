@@ -32,3 +32,13 @@ export async function getZeroXSwapTx(
 
 export const BNB_ADDRESS = "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
 export const bnbToWei = (bnb: number) => BigInt(Math.floor(bnb * 1e18)).toString()
+// Alias để tương thích với page.tsx
+export async function getOneInchSwapTx(
+  sellToken: string,
+  buyToken: string,
+  amount: string,
+  taker: string,
+  slippage: number = 0.5
+): Promise<any | null> {
+  return getZeroXSwapTx(sellToken, buyToken, amount, taker, 56)
+}
