@@ -1,5 +1,6 @@
 "use client"
 
+export const dynamic = 'force-dynamic'
 import { useState, useEffect } from "react"
 import { Connection, VersionedTransaction } from "@solana/web3.js"
 import { CHAINS, QUICK_BUY_AMOUNTS } from "@/lib/constants"
